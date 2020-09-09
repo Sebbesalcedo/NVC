@@ -1,0 +1,109 @@
+<div class="input-group mb-3">
+  <div class="input-group-prepend"></div>
+  <form style="width: 100%">
+    <input
+      [formControl]="buscador"
+      type="text"
+      class="form-control"
+      placeholder="Buscar pelicula"
+      (keyup)="searchMovie($event)"
+   />
+  </form>
+</div>
+
+<div class="container" *ngIf="error">No se encontraron resultado con: "<strong>{{valueSearch}}</strong>"</div>
+
+<div class="row"  *ngIf="!error">
+  <div class="col-md-4 sombra" *ngFor="let movie of movies$">
+    <div class="card text-center">
+      <div
+        class="card-header bg-dark text-white justify-content-between align-items-center"
+      >
+        {{ movie.Title }}
+      </div>
+      <a
+        class="btn btn-white btn-block"
+        (click)="infoMovie(movie)"
+        data-toggle="modal"
+        data-target=".bd-example-modal-lg"
+      >
+        <img
+          [src]="movie.Poster"
+          class="card-img-top align-items-center"
+          style="width: 150px; height: 250px; margin-left: 10%"
+        />
+      </a>
+      <div class="card-body">
+        <p>Año: {{ movie.Year }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal de info pelicula -->
+
+<div
+  class="modal fade bd-example-modal-lg"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myLargeModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      
+       
+      <table class="table">
+        <thead>
+         
+          <tr>
+            <td rowspan="4">
+              <img
+                [src]="movieSearch.Poster"
+                class="card-img-top"
+                style="width: 350px; height: 350px; top: 50%; bottom: 50%"
+              />
+            </td>
+           
+            <td colspan="2">
+              <label ><strong>Trama</strong></label>
+              <br>
+              {{
+                movieSearch.Plot
+              }}
+              
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><strong>Año :</strong> </label><br />
+              {{ movieSearch.Year }}
+            </td>
+            <td>
+              <label><strong>Genero :</strong> </label><br />
+              {{ movieSearch.Genre }}
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <label>Director:</label><br />
+              {{ movieSearch.Director }}
+              
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <label><strong>Actores :</strong> </label><br />{{
+                movieSearch.Actors
+              }}
+            </td>
+          </tr>
+        </thead>
+      </table>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
